@@ -1,1 +1,143 @@
-<mxfile host="app.diagrams.net" modified="2022-01-17T09:45:21.925Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55" version="16.2.6" etag="4Wj1x4bULL6pJj0LbhEV" type="github"><diagram id="v4n5Fe7IEU2MWI64un1J">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-01-17T10:35:43.820Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55" etag="cRax-V3O5CttJAbe12bc" version="16.2.6" type="github">
+  <diagram id="v4n5Fe7IEU2MWI64un1J" name="Page-1">
+    <mxGraphModel dx="782" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-1" value="&lt;br&gt;全局sync.map&lt;br&gt;(存储job与协程的关系，为1表示正在处理，0表示待处理)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-2" value="轮询查找处于running状态的job，检测是否存在于sync.map中，不存在则添加" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-3" value="生产者&lt;br&gt;遍历map，如果对应job不在处理，把其放入channel内，避免同时多个进程对一个job进行处理" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-4" value="消费者&lt;br&gt;利用协程池创建五个协程，从channel中获取job数据，对不同的job进行处理（协程拿到job后也对map对应的值进行一次判断，防止多个进程处理同一个job）" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="100" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-5" value="查找处于running状态的任务" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="220" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-5" target="G2hkq3Y0JSbxk2YWhdLl-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="210" as="sourcePoint" />
+            <mxPoint x="580" y="190" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-7" value="是否存在于sync.map" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="85" y="280" width="130" height="80" as="geometry" />
+        </mxCell>
+        <object label="" id="G2hkq3Y0JSbxk2YWhdLl-8">
+          <mxCell style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" target="G2hkq3Y0JSbxk2YWhdLl-15">
+            <mxGeometry width="50" height="50" relative="1" as="geometry">
+              <mxPoint x="320" y="320" as="sourcePoint" />
+              <mxPoint x="254" y="450" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="320" y="455" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-9" value="True" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="240" y="300" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-7" target="G2hkq3Y0JSbxk2YWhdLl-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="350" as="sourcePoint" />
+            <mxPoint x="580" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-12" value="False" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150" y="360" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-13" value="存入sync.map" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="380" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-14" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-13" target="G2hkq3Y0JSbxk2YWhdLl-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="350" as="sourcePoint" />
+            <mxPoint x="580" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-15" value="遍历map" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="95" y="440" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-16" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-15" target="G2hkq3Y0JSbxk2YWhdLl-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="430" as="sourcePoint" />
+            <mxPoint x="580" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-17" value="map值是否为1（正在处理）" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-18" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-17" target="G2hkq3Y0JSbxk2YWhdLl-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="420" as="sourcePoint" />
+            <mxPoint x="580" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-19" value="false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150" y="530" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-20" value="写入channel" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="554.5" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-22" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="350" as="sourcePoint" />
+            <mxPoint x="320" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-23" value="从channel中获取jobname" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-24" value="sync.map对应的值是否为0" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="300" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-25" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-23" target="G2hkq3Y0JSbxk2YWhdLl-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="280" as="sourcePoint" />
+            <mxPoint x="350" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="280" as="sourcePoint" />
+            <mxPoint x="500" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-28" value="true" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="470" y="350" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-29" value="执行相关操作" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="380" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-30" value="完成" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="465" y="440" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-31" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-29" target="G2hkq3Y0JSbxk2YWhdLl-30">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="430" as="sourcePoint" />
+            <mxPoint x="350" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-32" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="G2hkq3Y0JSbxk2YWhdLl-24" target="G2hkq3Y0JSbxk2YWhdLl-30">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="430" as="sourcePoint" />
+            <mxPoint x="350" y="380" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="640" y="320" />
+              <mxPoint x="640" y="455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G2hkq3Y0JSbxk2YWhdLl-33" value="false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="560" y="300" width="40" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
